@@ -2,7 +2,12 @@
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        main: "#fcfcfd",
+        line: "#f4f5f6",
+      },
+    },
   },
   plugins: [],
 };
