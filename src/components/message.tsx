@@ -7,7 +7,7 @@ const Message: React.FC<MessageProps> = () => {
     <div className="mb-8">
       <div className="flex text-sm font-light text-gray-500">
         <p>@prakashraman</p>
-        <p className="ml-3">5h</p>
+        <p className="ml-5 text-xs">5h</p>
       </div>
       <p className="text-sm font-light">
         As the head of Application Development at Sentiance, my role encompasses

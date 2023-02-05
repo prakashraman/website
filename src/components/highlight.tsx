@@ -7,7 +7,7 @@ export interface HighlightProps {
 
 const Highlight: React.FC<HighlightProps> = ({ image }) => {
   return (
-    <div className="bg-white">
+    <div className="border-b border-line bg-white">
       <Image src={image} alt="Minimalism" width={500} height={0} />
 
       <div className="p-5 font-light">

@@ -1,16 +1,14 @@
 import { type NextPage } from "next";
+import Image from "next/image";
 import Head from "next/head";
 import { Outfit } from "@next/font/google";
 
 import { api } from "../utils/api";
 import Message from "../components/message";
-import Highlight from "../components/highlight";
+import OpenAI from "../components/openai";
 
 /** Highlight image */
-import ladderImage from "../../public/ladder.jpeg";
-import dmb from "../../public/dmb.jpg";
-import elizabethtown from "../../public/elizabethtown-hallway.jpg";
-import computer from "../../public/computer.jpeg";
+import keyboard from "../../public/keyboard.jpeg";
 
 const font = Outfit({
   subsets: ["latin"],
@@ -39,7 +37,7 @@ const Home: NextPage = () => {
                   Prakash Raman
                 </h1>
                 <h3 className="max-w-2xl text-2xl font-extralight text-gray-500">
-                  As the head of Application Development at Sentiance, my role
+                  As the VP of Application Development at Sentiance, my role
                   encompasses both architectural planning and hands-on
                   development of applications <br />
                   <br />I live in Toronto, Canada
@@ -65,27 +63,100 @@ const Home: NextPage = () => {
                 <h1 className="mb-8 text-left text-4xl font-semibold">
                   about me
                 </h1>
-                <div className="grid grid-cols-2 gap-[80px]">
+                <div className="grid grid-cols-2 gap-[80px] text-gray-500">
                   <div>
-                    <Highlight image={ladderImage} />
-                    <div className="mb-[80px]" />
-                    <Highlight image={computer} />
+                    <Image
+                      src={keyboard}
+                      alt="Ladder"
+                      width={500}
+                      height={0}
+                      className="mb-[60px]"
+                    />
+                    <p className="mb-3 font-semibold">
+                      I am a <span className="text-black">minimalist</span>
+                    </p>
+                    <p className="font-extralight">
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry. Lorem Ipsum has been the industry's
+                      standard dummy text ever since the 1500s, when an unknown
+                      printer took a galley of type and scrambled it to make a
+                      type specimen book. It has survived not only five
+                      centuries, but also the leap into electronic typesetting,
+                      remaining essentially unchanged. It was popularised in the
+                      1960s with the release of Letraset sheets containing Lorem
+                      Ipsum passages, and more recently with desktop publishing
+                      software like Aldus PageMaker including versions of Lorem
+                      Ipsum.
+                    </p>
                   </div>
+
                   <div>
-                    <Highlight image={dmb} />
-                    <div className="mb-[80px]" />
-                    <Highlight image={elizabethtown} />
+                    <p className="mb-3 font-semibold">
+                      I am a <span className="text-black">minimalist</span>
+                    </p>
+                    <p className="font-extralight">
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry. Lorem Ipsum has been the industry's
+                      standard dummy text ever since the 1500s, when an unknown
+                      printer took a galley of type and scrambled it to make a
+                      type specimen book. It has survived not only five
+                      centuries, but also the leap into electronic typesetting,
+                      remaining essentially unchanged. It was popularised in the
+                      1960s with the release of Letraset sheets containing Lorem
+                      Ipsum passages, and more recently with desktop publishing
+                      software like Aldus PageMaker including versions of Lorem
+                      Ipsum.
+                    </p>
+                    <hr className="mt-4 mb-4" />
+
+                    <p className="mb-3 font-semibold">
+                      I build{" "}
+                      <span className="text-black">application frameworks</span>
+                    </p>
+                    <p className="font-extralight">
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry. Lorem Ipsum has been the industry's
+                      standard dummy text ever since the 1500s, when an unknown
+                      printer took a galley of type and scrambled it to make a
+                      type specimen book. It has survived not only five
+                      centuries, but also the leap into electronic typesetting,
+                      remaining essentially unchanged. It was popularised in the
+                      1960s with the release of Letraset sheets containing Lorem
+                      Ipsum passages, and more recently with desktop publishing
+                      software like Aldus PageMaker including versions of Lorem
+                      Ipsum.
+                    </p>
+                    <hr className="mt-4 mb-4" />
+
+                    <p className="mb-3 font-semibold">
+                      I am a <span className="text-black">minimalist</span>
+                    </p>
+                    <p className="font-extralight">
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry. Lorem Ipsum has been the industry's
+                      standard dummy text ever since the 1500s, when an unknown
+                      printer took a galley of type and scrambled it to make a
+                      type specimen book. It has survived not only five
+                      centuries, but also the leap into electronic typesetting,
+                      remaining essentially unchanged. It was popularised in the
+                      1960s with the release of Letraset sheets containing Lorem
+                      Ipsum passages, and more recently with desktop publishing
+                      software like Aldus PageMaker including versions of Lorem
+                      Ipsum.
+                    </p>
                   </div>
                 </div>
               </div>
             </section>
 
             {/* ChatGPT */}
-            <section className="flex h-screen pt-[40px]" id="try">
+            <section className="flex h-screen pt-[40px] font-light" id="try">
               <div>
-                <h1 className="text-left text-4xl font-semibold">
+                <h1 className="mb-8 text-left text-4xl font-semibold">
                   try chatgpt
                 </h1>
+
+                <OpenAI />
               </div>
             </section>
           </div>
@@ -100,7 +171,7 @@ const Home: NextPage = () => {
         </div>
 
         {/* Footer */}
-        <footer className="flex gap-[20px] p-[80px] font-thin">
+        <footer className="flex gap-[20px] border-t border-line p-[80px] font-thin">
           <span>
             <a href="mailto:prakash.raman.ka@gmail.com">
               prakash.raman.ka@gmail.com
