@@ -150,7 +150,10 @@ const Home: NextPage = () => {
             </section>
 
             {/* ChatGPT */}
-            <section className="flex h-screen pt-[40px] font-light" id="try">
+            <section
+              className="flex min-h-screen pt-[40px] font-light"
+              id="try"
+            >
               <div>
                 <h1 className="mb-8 text-left text-4xl font-semibold">
                   try chatgpt
@@ -165,7 +168,7 @@ const Home: NextPage = () => {
           <div className="absolute right-0 top-0 h-full w-[300px] overflow-hidden border-l border-line pt-[40px] pl-7 pr-7">
             <div className="absolute bottom-0 left-0 h-[500px] w-full bg-gradient-to-b from-transparent to-main"></div>
             {Array.from({ length: 50 }, (_, i) => (
-              <Message />
+              <Message key={`message-${i}`} />
             ))}
           </div>
         </div>

@@ -1,19 +1,40 @@
-import React from "react";
+import { listenerCount } from "process";
+import React, { useCallback, useEffect } from "react";
+import useSWR, { Fetcher } from "swr";
+
+const fetcher: Fetcher<any> = (url: string) =>
+  fetch(url).then((res) => res.text());
 
 export interface OpenAIProps {}
 
 const OpenAI: React.FC<OpenAIProps> = () => {
+  console.log("in openai component");
+
+  const [chat, setChat] = React.useState<string[]>([]);
+
+  const onSubmit = useCallback(() => {
+    console.log("clicking submit");
+    const listen = new EventSource("/api/chat");
+    listen.onmessage = (event) => {
+      const token = event.data.replace("\n\n", "<br/>");
+      setChat((chat) => [...chat, token]);
+    };
+    listen.onerror = (event) => {
+      listen.close();
+      console.log(event);
+    };
+  }, []);
+
   return (
     <div>
       <p className="mb-3">
-        I've built a tiny application on top of openai to demonstrate the power
-        of openai and how easy to build applications on top it. The
-        possibilities are endless.
+        This is basic application built on top of openai which recommends movies
+        based on what you like. Let's say you how OpenAI suggests!
       </p>
 
       <p className="mb-10">
-        Enter a popular movie you like, the application will give you three
-        other movies which you other similar movies.
+        In the textfield below enter a popular movie you like and click "ask
+        openai"
       </p>
 
       <div className="h-[56px]">
@@ -21,8 +42,11 @@ const OpenAI: React.FC<OpenAIProps> = () => {
           className="text-l h-full w-[500px] rounded-full border border-gray-300 pl-8"
           placeholder="Enter a movie name"
         />
-        <button className="text-l ml-5 h-full rounded-full bg-gray-800 pl-10 pr-10 text-white">
-          Submit
+        <button
+          className="text-l ml-5 h-full rounded-full bg-gray-800 pl-10 pr-10 text-white"
+          onClick={onSubmit}
+        >
+          Ask OpenAI
         </button>
       </div>
 
@@ -40,6 +64,7 @@ const OpenAI: React.FC<OpenAIProps> = () => {
           )
         )}
       </div>
+      <div dangerouslySetInnerHTML={{ __html: chat.join(" ") }}>{}</div>
     </div>
   );
 };
