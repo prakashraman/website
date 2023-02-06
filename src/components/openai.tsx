@@ -1,25 +1,33 @@
-import { listenerCount } from "process";
-import React, { useCallback, useEffect } from "react";
-import useSWR, { Fetcher } from "swr";
-
-const fetcher: Fetcher<any> = (url: string) =>
-  fetch(url).then((res) => res.text());
+import React, { useCallback } from "react";
 
 export interface OpenAIProps {}
 
-const OpenAI: React.FC<OpenAIProps> = () => {
-  console.log("in openai component");
+/** Trims <br> from the string */
+const removeBreaks = (x: string) =>
+  x.replace(/^( |<br \/>)*(.*?)( |<br \/>)*$/, "$2");
 
-  const [chat, setChat] = React.useState<string[]>([]);
+const OpenAI: React.FC<OpenAIProps> = () => {
+  const textRef = React.useRef<HTMLInputElement>(null);
+  const [chat, setChat] = React.useState<string>("");
+  const [loading, setloading] = React.useState<boolean>(false);
 
   const onSubmit = useCallback(() => {
-    console.log("clicking submit");
-    const listen = new EventSource("/api/chat");
+    setloading(true);
+    setChat("");
+    const listen = new EventSource(`/api/chat?q=${textRef.current?.value}`);
     listen.onmessage = (event) => {
       const token = event.data.replace("\n\n", "<br/>");
-      setChat((chat) => [...chat, token]);
+
+      if (token == "[DONE]") {
+        listen.close();
+        setloading(false);
+        return;
+      }
+
+      setChat((chat) => `${chat}${token}`);
     };
     listen.onerror = (event) => {
+      setloading(false);
       listen.close();
       console.log(event);
     };
@@ -41,9 +49,10 @@ const OpenAI: React.FC<OpenAIProps> = () => {
         <input
           className="text-l h-full w-[500px] rounded-full border border-gray-300 pl-8"
           placeholder="Enter a movie name"
+          ref={textRef}
         />
         <button
-          className="text-l ml-5 h-full rounded-full bg-gray-800 pl-10 pr-10 text-white"
+          className="text-l ml-5 h-full rounded-full bg-gray-800 pl-10 pr-10 text-white disabled:bg-gray-200"
           onClick={onSubmit}
         >
           Ask OpenAI
@@ -64,7 +73,12 @@ const OpenAI: React.FC<OpenAIProps> = () => {
           )
         )}
       </div>
-      <div dangerouslySetInnerHTML={{ __html: chat.join(" ") }}>{}</div>
+      {chat && (
+        <div className="mt-6 bg-gray-800 p-3 font-light text-white">
+          <span dangerouslySetInnerHTML={{ __html: removeBreaks(chat) }}></span>
+          {loading && <span className="animate-ping">&#9608;</span>}
+        </div>
+      )}
     </div>
   );
 };
