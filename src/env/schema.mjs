@@ -8,6 +8,7 @@ import { z } from "zod";
 export const serverSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
   OPENAI_API_KEY: z.string(),
+  OMDB_API_KEY: z.string(),
 });
 
 /**
@@ -18,6 +19,7 @@ export const serverSchema = z.object({
 export const serverEnv = {
   NODE_ENV: process.env.NODE_ENV,
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+  OMDB_API_KEY: process.env.OMDB_API_KEY,
 };
 
 /**
