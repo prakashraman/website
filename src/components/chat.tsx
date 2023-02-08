@@ -1,13 +1,14 @@
 import React, { ChangeEvent, useCallback, useEffect } from "react";
 import { api } from "../utils/api";
+import debounce from "lodash.debounce";
 
-export interface OpenAIProps {}
+export interface ChatProps {}
 
 /** Trims <br> from the string */
 const removeBreaks = (x: string) =>
   x.replace(/^( |<br \/>)*(.*?)( |<br \/>)*$/, "$2");
 
-const OpenAI: React.FC<OpenAIProps> = () => {
+const Chat: React.FC<ChatProps> = () => {
   const textRef = React.useRef<HTMLInputElement>(null);
   const [text, setText] = React.useState<string>("");
   const [chat, setChat] = React.useState<string>("");
@@ -17,10 +18,29 @@ const OpenAI: React.FC<OpenAIProps> = () => {
     { enabled: false }
   );
 
+  /** on text change handlers */
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
+  const debouncedChangeHandler = useCallback(debounce(changeHandler, 300), []);
+
+  /**
+   * Reset
+   */
+  const reset = () => {
+    setChat("");
+    setText("");
+    setloading(false);
+    textRef.current!.value = "";
+  };
+
   const onSubmit = useCallback(() => {
     setloading(true);
     setChat("");
 
+    /**
+     * Request text streaming from open ai
+     */
     const listen = new EventSource(`/api/chat?q=${textRef.current?.value}`);
     listen.onmessage = (event) => {
       const token = event.data.replace("\n\n", "<br>");
@@ -47,7 +67,7 @@ const OpenAI: React.FC<OpenAIProps> = () => {
   }, [text]);
 
   return (
-    <div>
+    <div className="">
       <p className="mb-3 font-extralight text-gray-800">
         This is basic application built on top of openai which recommends movies
         based on what you like. Let's say you how OpenAI suggests!
@@ -62,11 +82,12 @@ const OpenAI: React.FC<OpenAIProps> = () => {
         <input
           className="text-l h-full w-[500px] rounded-full border border-gray-300 pl-8 outline-none focus:border-gray-800"
           placeholder="Enter a movie name"
-          onChange={(e) => setText(e.target.value)}
+          onChange={debouncedChangeHandler}
           ref={textRef}
         />
         <button
-          className="text-l ml-5 h-full rounded-full bg-gray-800 pl-10 pr-10 text-white disabled:bg-gray-200"
+          disabled={text.length < 3}
+          className="text-l ml-5 h-full rounded-full bg-gray-800 pl-10 pr-10 text-white disabled:bg-gray-200 disabled:text-gray-500"
           onClick={onSubmit}
         >
           Ask OpenAI
@@ -74,13 +95,21 @@ const OpenAI: React.FC<OpenAIProps> = () => {
       </div>
 
       {/* options */}
-      <div className="mt-4 flex flex-wrap gap-4">
+      {data && data.length > 0 && (
+        <div className="mt-4 ml-4 text-gray-600">
+          <span className="text-sm">
+            Tap one to view the recommendation or hit "ask openai"
+          </span>
+        </div>
+      )}
+
+      <div className="mt-4 flex flex-wrap items-center gap-4">
         {data &&
           data.length > 0 &&
-          data.map((x) => (
+          data.map((x, i) => (
             <span
               className="cursor-pointer rounded-full bg-gray-200 pl-4 pr-4 pt-2 pb-2 text-sm hover:bg-gray-300"
-              key={x}
+              key={`${x}-${i}`}
               onClick={() => {
                 textRef.current!.value = x;
                 setText(x);
@@ -97,8 +126,14 @@ const OpenAI: React.FC<OpenAIProps> = () => {
           {loading && <span className="animate-ping">&#9608;</span>}
         </div>
       )}
+
+      {chat && !loading && (
+        <span className="mt-4 block cursor-pointer underline" onClick={reset}>
+          Want to try it again?
+        </span>
+      )}
     </div>
   );
 };
 
-export default OpenAI;
+export default Chat;

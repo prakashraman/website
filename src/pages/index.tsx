@@ -1,23 +1,18 @@
 import { type NextPage } from "next";
-import Image from "next/image";
 import Head from "next/head";
 import { Outfit } from "@next/font/google";
 
-import { api } from "../utils/api";
-import Message from "../components/message";
-import OpenAI from "../components/openai";
-
-/** Highlight image */
-import keyboard from "../../public/keyboard.jpeg";
+import Hero from "../components/sections/hero";
+import Aboutme from "../components/sections/aboutme";
+import OpenAI from "../components/sections/openai";
+import RightPanel from "../components/right-panel";
+import Footer from "../components/footer";
 
 const font = Outfit({
   subsets: ["latin"],
 });
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
-  const text = hello.data ? hello.data.greeting : "Loading tRPC query...";
-
   return (
     <>
       <Head>
@@ -26,162 +21,17 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={[font.className].join(" ")}>
-        {/* Main Body */}
         <div className="relative">
-          {/* Left Panel */}
-          <div className="mr-[300px] pl-[80px]">
-            {/* Hero */}
-            <section className="flex h-screen items-center border-b border-line">
-              <div className="relative flex h-full flex-col justify-center">
-                <h1 className="mb-7 text-left text-7xl font-semibold">
-                  Prakash Raman
-                </h1>
-                <h3 className="max-w-2xl text-2xl font-extralight text-gray-500">
-                  As the VP of Application Development at Sentiance, my role
-                  encompasses both architectural planning and hands-on
-                  development of applications <br />
-                  <br />I live in Toronto, Canada
-                </h3>
-
-                <div className="absolute bottom-[80px]">
-                  <a className="underline" href="#about-me">
-                    about me
-                  </a>
-                  <a className="ml-5 underline" href="#try">
-                    try chatgpt
-                  </a>
-                </div>
-              </div>
-            </section>
-
-            {/* About me */}
-            <section
-              className="min-h-screen border-b border-line pt-[40px] pb-[80px]"
-              id="about-me"
-            >
-              <div className="pr-[80px]">
-                <h1 className="mb-8 text-left text-4xl font-semibold">
-                  about me
-                </h1>
-                <div className="grid grid-cols-2 gap-[80px] text-gray-500">
-                  <div>
-                    <Image
-                      src={keyboard}
-                      alt="Ladder"
-                      width={500}
-                      height={0}
-                      className="mb-[60px]"
-                    />
-                    <p className="mb-3 font-semibold">
-                      I am a <span className="text-black">minimalist</span>
-                    </p>
-                    <p className="font-extralight">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book. It has survived not only five
-                      centuries, but also the leap into electronic typesetting,
-                      remaining essentially unchanged. It was popularised in the
-                      1960s with the release of Letraset sheets containing Lorem
-                      Ipsum passages, and more recently with desktop publishing
-                      software like Aldus PageMaker including versions of Lorem
-                      Ipsum.
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="mb-3 font-semibold">
-                      I am a <span className="text-black">minimalist</span>
-                    </p>
-                    <p className="font-extralight">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book. It has survived not only five
-                      centuries, but also the leap into electronic typesetting,
-                      remaining essentially unchanged. It was popularised in the
-                      1960s with the release of Letraset sheets containing Lorem
-                      Ipsum passages, and more recently with desktop publishing
-                      software like Aldus PageMaker including versions of Lorem
-                      Ipsum.
-                    </p>
-                    <hr className="mt-4 mb-4" />
-
-                    <p className="mb-3 font-semibold">
-                      I build{" "}
-                      <span className="text-black">application frameworks</span>
-                    </p>
-                    <p className="font-extralight">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book. It has survived not only five
-                      centuries, but also the leap into electronic typesetting,
-                      remaining essentially unchanged. It was popularised in the
-                      1960s with the release of Letraset sheets containing Lorem
-                      Ipsum passages, and more recently with desktop publishing
-                      software like Aldus PageMaker including versions of Lorem
-                      Ipsum.
-                    </p>
-                    <hr className="mt-4 mb-4" />
-
-                    <p className="mb-3 font-semibold">
-                      I am a <span className="text-black">minimalist</span>
-                    </p>
-                    <p className="font-extralight">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book. It has survived not only five
-                      centuries, but also the leap into electronic typesetting,
-                      remaining essentially unchanged. It was popularised in the
-                      1960s with the release of Letraset sheets containing Lorem
-                      Ipsum passages, and more recently with desktop publishing
-                      software like Aldus PageMaker including versions of Lorem
-                      Ipsum.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* ChatGPT */}
-            <section
-              className="flex min-h-screen pt-[40px] font-light"
-              id="try"
-            >
-              <div>
-                <h1 className="mb-8 text-left text-4xl font-semibold">
-                  try chatgpt
-                </h1>
-
-                <OpenAI />
-              </div>
-            </section>
+          <div className="mr-[300px] pl-[80px] pr-[80px]">
+            <Hero />
+            <Aboutme />
+            <OpenAI />
           </div>
 
-          {/* Right Panel */}
-          <div className="absolute right-0 top-0 h-full w-[300px] overflow-hidden border-l border-line pt-[40px] pl-7 pr-7">
-            <div className="absolute bottom-0 left-0 h-[500px] w-full bg-gradient-to-b from-transparent to-main"></div>
-            {Array.from({ length: 50 }, (_, i) => (
-              <Message key={`message-${i}`} />
-            ))}
-          </div>
+          <RightPanel />
         </div>
 
-        {/* Footer */}
-        <footer className="flex gap-[20px] border-t border-line p-[80px] font-thin">
-          <span>
-            <a href="mailto:prakash.raman.ka@gmail.com">
-              prakash.raman.ka@gmail.com
-            </a>{" "}
-            / +1 (437) 261-0658
-          </span>
-        </footer>
+        <Footer />
       </main>
     </>
   );
