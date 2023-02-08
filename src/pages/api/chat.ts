@@ -1,4 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { Overwrite } from "@trpc/server";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { Configuration, CreateCompletionResponse, OpenAIApi } from "openai";
 import { env } from "../../env/server.mjs";
 
@@ -8,7 +9,12 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+/**
+ * Adjusting NextApiRequest to define query as a string
+ */
+type ApiRequest = NextApiRequest & { query: { q: string } };
+
+const handler = async (req: ApiRequest, res: NextApiResponse) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Content-Type", "text/event-stream;charset=utf-8");
   res.setHeader("Cache-Control", "no-cache, no-transform");
