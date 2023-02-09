@@ -6,7 +6,7 @@ import Hero from "../components/sections/hero";
 import Aboutme from "../components/sections/aboutme";
 import OpenAI from "../components/sections/openai";
 import RightPanel from "../components/right-panel";
-import Footer from "../components/footer";
+import Footer from "../components/Footer";
 
 const font = Outfit({
   subsets: ["latin"],
