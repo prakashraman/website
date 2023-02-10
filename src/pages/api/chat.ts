@@ -3,6 +3,13 @@ import { Configuration, CreateCompletionResponse, OpenAIApi } from "openai";
 import { env } from "../../env/server.mjs";
 
 /**
+ * Denotes that this is an edge function
+ */
+export const config = {
+  runtime: "edge",
+};
+
+/**
  * OpenAI API Configuration
  */
 const configuration = new Configuration({
