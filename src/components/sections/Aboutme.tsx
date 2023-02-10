@@ -15,7 +15,7 @@ const Aboutme: React.FC = () => {
     >
       <div>
         <h1 className="mb-8 text-left text-4xl font-semibold">about me</h1>
-        <div className="grid grid-cols-2 gap-[40px] text-gray-500 lg:gap-[80px]">
+        <div className="grid grid-cols-1 gap-[40px] text-gray-500 lg:grid-cols-2 lg:gap-[80px]">
           <div>
             <Image
               src={keyboard}

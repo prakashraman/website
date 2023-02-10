@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="flex gap-[20px] border-t border-line p-[80px] font-thin">
+    <footer className="flex gap-[20px] border-t border-line p-[40px] font-thin lg:p-[80px]">
       <span>
         <a
           href="https://www.linkedin.com/in/prakash-raman-a68541b/"

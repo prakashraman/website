@@ -5,7 +5,7 @@ const Hero: React.FC = () => {
     <section className="flex h-screen items-center border-b border-line">
       <div className="relative flex h-full flex-col justify-center">
         <h1 className="mb-7 text-left text-7xl font-semibold">Prakash Raman</h1>
-        <h3 className="max-w-2xl text-2xl font-extralight text-gray-500">
+        <h3 className="text-2xl font-extralight text-gray-500">
           I am the VP of Application Development at{" "}
           <a
             href="https://www.sentiance.com"
