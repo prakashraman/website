@@ -5,7 +5,7 @@ import { Outfit } from "@next/font/google";
 import Hero from "../components/sections/Hero";
 import Aboutme from "../components/sections/Aboutme";
 import OpenAI from "../components/sections/OpenaiPlayground";
-import RightPanel from "../components/right-panel";
+import RightPanel from "../components/RightPanel";
 import Footer from "../components/Footer";
 
 const font = Outfit({
