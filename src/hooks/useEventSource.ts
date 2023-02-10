@@ -5,6 +5,10 @@ import { useState } from "react";
  * when the stream is complete
  */
 const DONE = "[DONE]";
+const NEWLINES = "\n\n";
+const BR = "<br>";
+
+type EventWithData = Event & { data: string };
 
 /**
  * Custom Event Source Hook
@@ -22,21 +26,21 @@ const useEventSource = () => {
     const eventSource = new EventSource(url);
 
     eventSource.onmessage = (event) => {
-      // replace new lines with <br> tags
-      const token = event.data.replace("\n\n", "<br>");
+      const s = (event as EventWithData).data.replace(NEWLINES, BR);
 
-      if (token == DONE) {
+      if (s == DONE) {
         eventSource.close();
         setLoading(false);
         setDone(true);
         return;
       }
 
-      setData((data) => `${data}${token}`);
+      setData((data) => `${data}${s}`);
     };
 
     eventSource.onerror = (event) => {
       setError("unable to fetch data");
+      setData("error: unable to interact with openai. please try again.");
       setLoading(false);
       setDone(true);
     };

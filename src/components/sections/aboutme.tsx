@@ -3,9 +3,11 @@ import Image from "next/image";
 
 import keyboard from "../../../public/keyboard.jpeg";
 
-export interface AboutmeProps {}
+/**
+ * ======================== Component ========================
+ */
 
-const Aboutme: React.FC<AboutmeProps> = () => {
+const Aboutme: React.FC = () => {
   return (
     <section
       className="min-h-screen border-b border-line pt-[40px] pb-[80px]"
@@ -13,7 +15,7 @@ const Aboutme: React.FC<AboutmeProps> = () => {
     >
       <div>
         <h1 className="mb-8 text-left text-4xl font-semibold">about me</h1>
-        <div className="grid grid-cols-2 gap-[80px] text-gray-500">
+        <div className="grid grid-cols-2 gap-[40px] text-gray-500 lg:gap-[80px]">
           <div>
             <Image
               src={keyboard}
@@ -58,7 +60,8 @@ const Aboutme: React.FC<AboutmeProps> = () => {
             <hr className="mt-4 mb-4" />
 
             <p className="mb-3 font-semibold">
-              I build <span className="text-black">application frameworks</span>
+              I direct <span className="text-black">engineering teams</span> and
+              build <span className="text-black">application frameworks</span>
             </p>
             <p className="font-extralight">
               Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -75,7 +78,7 @@ const Aboutme: React.FC<AboutmeProps> = () => {
             <hr className="mt-4 mb-4" />
 
             <p className="mb-3 font-semibold">
-              I am a <span className="text-black">minimalist</span>
+              my <span className="text-black">life in Belgium</span>
             </p>
             <p className="font-extralight">
               Lorem Ipsum is simply dummy text of the printing and typesetting

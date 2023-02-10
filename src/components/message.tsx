@@ -1,8 +1,10 @@
 import React from "react";
 
-export interface MessageProps {}
+/**
+ * ======================== Component ========================
+ */
 
-const Message: React.FC<MessageProps> = () => {
+const Message: React.FC = () => {
   return (
     <div className="mb-8">
       <div className="flex text-sm font-light text-gray-500">

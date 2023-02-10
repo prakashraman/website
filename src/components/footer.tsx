@@ -1,8 +1,6 @@
 import React from "react";
 
-export interface FooterProps {}
-
-const Footer: React.FC<FooterProps> = () => {
+const Footer: React.FC = () => {
   return (
     <footer className="flex gap-[20px] border-t border-line p-[80px] font-thin">
       <span>

@@ -4,13 +4,19 @@ import debounce from "lodash.debounce";
 import { api } from "../utils/api";
 import useEventSource from "../hooks/useEventSource";
 
-export interface ChatProps {}
-
-/** Trims <br> from the string */
+/**
+ * Trims <br> from the string
+ * @param x string to trim
+ * @returns string
+ */
 const removeBreaks = (x: string) =>
   x.replace(/^( |<br \/>)*(.*?)( |<br \/>)*$/, "$2");
 
-const Chat: React.FC<ChatProps> = () => {
+/**
+ * ======================== Component ========================
+ */
+
+const Chat: React.FC = () => {
   const textRef = React.useRef<HTMLInputElement>(null);
   const [text, setText] = React.useState<string>("");
   const { data: chat, reset: resetEventSource, done, run } = useEventSource();
@@ -19,7 +25,11 @@ const Chat: React.FC<ChatProps> = () => {
     { enabled: false }
   );
 
-  /** on text change handlers */
+  /**
+   * Handlers to the input changes.
+   * Debounces the input changes to 300ms
+   * @param e
+   */
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
@@ -38,7 +48,7 @@ const Chat: React.FC<ChatProps> = () => {
    */
   const onSubmit = useCallback(() => {
     resetEventSource();
-    run(`/api/chat?q=${textRef.current?.value}`);
+    run(`/api/chat?q=${textRef.current?.value ?? ""}`);
   }, []);
 
   /**
@@ -46,7 +56,10 @@ const Chat: React.FC<ChatProps> = () => {
    */
   useEffect(() => {
     if (text.length < 3) return;
-    refetch();
+
+    refetch()
+      .then()
+      .catch((e) => console.log(e));
   }, [text]);
 
   return (
@@ -108,9 +121,20 @@ const Chat: React.FC<ChatProps> = () => {
         {!done && <span className="animate-ping">&#9608;</span>}
       </div>
 
-      {done && (
-        <span className="mt-4 block cursor-pointer underline" onClick={reset}>
-          Want to try it again?
+      {!done && (
+        <span
+          className="mt-4 flex cursor-pointer justify-between underline"
+          onClick={reset}
+        >
+          <span>want to try it again?</span>
+          <a
+            href="https://github.com/prakashraman/website/blob/event-source-hook/src/pages/api/chat.ts"
+            target={"_blank"}
+            className="text-gray-800 underline"
+            rel="noreferrer"
+          >
+            view source code
+          </a>
         </span>
       )}
     </div>
