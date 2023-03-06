@@ -44,8 +44,9 @@ type ApiRequest = NextApiRequest & { query: { q: string } };
  * @param res
  * @returns
  */
-const handler = async (req: ApiRequest, res: NextApiResponse) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+const handler = async (req: Request, res: Response) => {
+  res.headers;
+  res.setHeader("Connection", "keep-alive");
   res.setHeader("Content-Type", "text/event-stream;charset=utf-8");
   res.setHeader("Cache-Control", "no-cache, no-transform");
   res.setHeader("X-Accel-Buffering", "no");
@@ -74,6 +75,11 @@ const handler = async (req: ApiRequest, res: NextApiResponse) => {
   (openairesponse.data as ResponseStream).on("data", (chunk: Buffer) => {
     const decoder = new TextDecoder("utf-8");
     const text = decoder.decode(chunk).replace("data: ", "");
+
+    new Response(text, {
+      status: 200,
+      headers: { "Content-Type": "text/event-stream" },
+    });
 
     /**
      * Denotes the end of the stream from OpenAI
