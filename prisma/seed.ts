@@ -5,12 +5,16 @@ import random from "lodash/random";
 
 const prisma = new PrismaClient();
 
+/**
+ * Seeds 50 tweets
+ */
 const tweet = async () => {
-  await prisma.tweet.create({
-    data: {
+  await prisma.tweet.deleteMany();
+  await prisma.tweet.createMany({
+    data: times(50, () => ({
       publishedAt: faker.date.past(),
       text: faker.lorem.sentences(random(1, 3)),
-    },
+    })),
   });
 };
 
@@ -24,10 +28,8 @@ const mark = async () => {
 };
 
 console.log("seeding tweets");
-times(5, async () => {
-  await tweet();
-});
 
+tweet();
 mark();
 
 console.log("done seeding tweets");

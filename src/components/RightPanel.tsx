@@ -1,4 +1,6 @@
 import React from "react";
+import { api } from "../utils/api";
+
 import Message from "./Message";
 
 export interface RightPanelProps {
@@ -6,6 +8,8 @@ export interface RightPanelProps {
 }
 
 const RightPanel: React.FC<RightPanelProps> = ({ classNames }) => {
+  const { data: messages } = api.tweets.fetch.useQuery();
+
   return (
     <div
       className={[
@@ -14,9 +18,8 @@ const RightPanel: React.FC<RightPanelProps> = ({ classNames }) => {
       ].join(" ")}
     >
       <div className="absolute bottom-0 left-0 h-[500px] w-full bg-gradient-to-b from-transparent to-main"></div>
-      {Array.from({ length: 50 }, (_, i) => (
-        <Message key={`message-${i}`} />
-      ))}
+      {messages &&
+        messages.map((m) => <Message key={`message-${m.id}`} tweet={m} />)}
     </div>
   );
 };
