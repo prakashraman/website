@@ -12,6 +12,7 @@ datasource db {
 
 model Tweet {
   id          Int      @id @default(autoincrement())
+  tweetId     String
   createdAt   DateTime @default(now())
   publishedAt DateTime
   text        String   @db.Text

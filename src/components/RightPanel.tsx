@@ -10,6 +10,8 @@ export interface RightPanelProps {
 const RightPanel: React.FC<RightPanelProps> = ({ classNames }) => {
   const { data: messages } = api.tweets.fetch.useQuery();
 
+  console.log(messages);
+
   return (
     <div
       className={[
